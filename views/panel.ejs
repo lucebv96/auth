@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Panel de Usuario</title>
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Bienvenido <%= usuario.correo %></h1>
+    <p>Rol: <%= usuario.rol %></p>
+    <% if (usuario.rol === 'admin') { %>
+      <a href="/admin" class="boton">Panel de Administrador</a>
+    <% } %>
+    <form action="/cerrar-sesion" method="POST">
+      <button type="submit" class="boton">Cerrar Sesión</button>
+    </form>
+  </div>
+</body>
+</html>

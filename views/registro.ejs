@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registro</title>
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Registro de Usuario</h1>
+    <form action="/registro" method="POST" class="formulario">
+      <!-- Campo para el token CSRF -->
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="campo">
+        <label>Correo:</label>
+        <input type="email" name="correo" required>
+      </div>
+      <div class="campo">
+        <label>Contraseña:</label>
+        <input type="password" name="contrasena" required>
+      </div>
+      <button type="submit" class="boton">Registrarse</button>
+    </form>
+    <a href="/iniciar-sesion">¿Ya tienes cuenta? Inicia sesión</a>
+  </div>
+</body>
+</html>

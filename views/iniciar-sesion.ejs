@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Iniciar Sesión</title>
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Iniciar Sesión</h1>
+    <form action="/iniciar-sesion" method="POST" class="formulario">
+      <!-- Campo para el token CSRF -->
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="campo">
+        <label>Correo:</label>
+        <input type="email" name="correo" required>
+      </div>
+      <div class="campo">
+        <label>Contraseña:</label>
+        <input type="password" name="contrasena" required>
+      </div>
+      <button type="submit" class="boton">Iniciar Sesión</button>
+    </form>
+    <a href="/registro">¿No tienes cuenta? Regístrate</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Panel de Administrador</title>
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Panel de Administrador</h1>
+    <table class="tabla-usuarios">
+      <tr>
+        <th>ID</th>
+        <th>Correo</th>
+        <th>Rol</th>
+        <th>Última Sesión</th>
+      </tr>
+      <% usuarios.forEach(function(usuario) { %>
+        <tr>
+          <td><%= usuario.id %></td>
+          <td><%= usuario.correo %></td>
+          <td><%= usuario.rol %></td>
+          <td><%= usuario.ultima_sesion || 'Nunca' %></td>
+        </tr>
+      <% }); %>
+    </table>
+    <a href="/panel" class="boton">Volver al Panel</a>
+  </div>
+</body>
+</html>
