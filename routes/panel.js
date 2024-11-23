@@ -35,5 +35,43 @@ router.post('/asignar-admin', verificarToken, verificarAdmin, (req, res) => {
   );
 });
 
+router.delete('/admin/usuarios', verificarToken, verificarAdmin, (req, res) => {
+  const { correo } = req.body;
+  if (!correo) {
+    return res.status(400).send('Correo requerido para eliminar usuario.');
+  }
+
+  db.run('DELETE FROM usuarios WHERE correo = ?', [correo], (err) => {
+    if (err) {
+      return res.status(500).send('Error al eliminar usuario.');
+    }
+    res.send('Usuario eliminado con éxito.');
+  });
+});
+
+
+router.get('/admin/intentos-fallidos', verificarToken, verificarAdmin, (req, res) => {
+  db.all('SELECT * FROM intentos_fallidos ORDER BY fecha DESC', (err, intentos) => {
+    if (err) {
+      return res.status(500).send('Error al recuperar intentos fallidos.');
+    }
+    res.json(intentos);
+  });
+});
+
+
+router.get('/admin/intentos-fallidos-vista', verificarToken, verificarAdmin, (req, res) => {
+  db.all('SELECT * FROM intentos_fallidos ORDER BY fecha DESC', (err, intentos) => {
+    if (err) {
+      return res.status(500).send('Error al recuperar intentos fallidos.');
+    }
+    res.render('admin-intentos', { intentos });
+  });
+});
+
+router.get('/admin/eliminar-usuarios', verificarToken, verificarAdmin, (req, res) => {
+  res.render('admin-eliminar-usuarios');
+});
+
 
 module.exports = router;

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Intentos Fallidos</title>
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <div class="contenedor">
+    <h1>Intentos Fallidos de Inicio de Sesión</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Correo</th>
+          <th>Fecha</th>
+          <th>IP</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% intentos.forEach(intento => { %>
+        <tr>
+          <td><%= intento.correo %></td>
+          <td><%= intento.fecha %></td>
+          <td><%= intento.ip %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+    <a href="/panel">Volver al panel</a>
+  </div>
+</body>
+</html>
+
