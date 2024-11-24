@@ -6,9 +6,10 @@ const xss = require('xss');
 
 
 router.get('/panel', verificarToken, (req, res) => {
-  const usuario = { ...req.usuario, correo: xss(req.usuario.correo) }; // Sanitizar datos antes de renderizar
+  const usuario = { ...req.usuario };
   res.render('panel', { usuario });
 });
+
 
 
 router.get('/admin', verificarToken, verificarAdmin, (req, res) => {

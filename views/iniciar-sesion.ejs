@@ -10,16 +10,27 @@
     <form action="/iniciar-sesion" method="POST" class="formulario">
       <!-- Campo para el token CSRF -->
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      
       <div class="campo">
         <label>Correo:</label>
         <input type="email" name="correo" required>
       </div>
+
       <div class="campo">
         <label>Contraseña:</label>
         <input type="password" name="contrasena" required>
       </div>
+
+      <!-- Opción para recordar la sesión usando cookies -->
+      <div class="campo">
+        <label>
+          <input type="checkbox" name="recordar" value="true"> Recordarme
+        </label>
+      </div>
+
       <button type="submit" class="boton">Iniciar Sesión</button>
     </form>
+    
     <a href="/registro">¿No tienes cuenta? Regístrate</a>
   </div>
 </body>

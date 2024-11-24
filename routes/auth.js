@@ -35,6 +35,7 @@ router.get('/iniciar-sesion', (req, res) => {
   res.render('iniciar-sesion');
 });
 
+// Cambio en la ruta POST de iniciar sesión
 router.post('/iniciar-sesion', limitarIntentos, (req, res) => {
   const correo = xss(req.body.correo); // Sanitizar entrada del correo
   const contrasena = xss(req.body.contrasena); // Sanitizar entrada de contraseña
@@ -46,7 +47,26 @@ router.post('/iniciar-sesion', limitarIntentos, (req, res) => {
 
     if (verificarContrasena(contrasena, usuario.contrasena)) {
       const token = generarToken(usuario);
-      res.cookie('token', token, cookieConfig);
+
+      // Si "Recuérdame" está marcado, agregamos maxAge
+      if (req.body.recordarme) {
+        res.cookie('token', token, { 
+          httpOnly: true, 
+          secure: true, 
+          sameSite: 'strict',
+          maxAge: 30 * 24 * 60 * 60 * 1000,  // 30 días
+          path: '/' 
+        });
+      } else {
+        // Si no está marcado, la cookie se elimina cuando se cierra el navegador
+        res.cookie('token', token, { 
+          httpOnly: true, 
+          secure: true, 
+          sameSite: 'strict', 
+          path: '/' 
+        });
+      }
+      
       res.redirect('/panel');
     } else {
       registrarIntentoFallido(correo, req.ip);
@@ -55,9 +75,11 @@ router.post('/iniciar-sesion', limitarIntentos, (req, res) => {
   });
 });
 
+
+
 router.post('/cerrar-sesion', (req, res) => {
-  res.clearCookie('token', cookieConfig);
-  req.session.destroy();
+  res.clearCookie('token', cookieConfig);  // Elimina la cookie JWT
+  req.session.destroy();  // Elimina la sesión
   res.redirect('/iniciar-sesion');
 });
 
