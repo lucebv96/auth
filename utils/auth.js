@@ -22,21 +22,35 @@ function registrarIntentoFallido(correo, ip) {
   );
 }
 
+
+function cifrarCorreo(correo) {
+  const iv = Buffer.alloc(16, 0); // Vector de inicialización (16 bytes de ceros)
+  const cipher = crypto.createCipheriv('aes-256-cbc', claveSecreta.slice(0, 32), iv);
+  const correoCifrado = cipher.update(correo, 'utf8', 'hex') + cipher.final('hex');
+  return correoCifrado;
+}
+
 function generarToken(usuario) {
+  const correoCifrado = cifrarCorreo(usuario.correo); // Cifrar el correo antes de incluirlo en el token
+  //console.log('Correo original:', usuario.correo);
+  //console.log('Correo cifrado:', correoCifrado);
+
   return jwt.sign(
-    { 
-      id: usuario.id, 
-      correo: usuario.correo, 
-      rol: usuario.rol 
+    {
+      id: usuario.id,
+      correo: correoCifrado, // Guardar correo cifrado
+      rol: usuario.rol
     },
     claveSecreta,
     { expiresIn: '1h' }
   );
 }
 
+
 module.exports = {
   hashContrasena,
   verificarContrasena,
   registrarIntentoFallido,
-  generarToken
+  generarToken,
+  cifrarCorreo
 };
