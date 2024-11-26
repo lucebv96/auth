@@ -26,4 +26,10 @@ db.serialize(() => {
   )`);
 });
 
+
+setInterval(() => {
+  db.run('DELETE FROM intentos_fallidos WHERE fecha < datetime("now", "-1 day")');
+}, 3600000); // Ejecutar cada hora
+
+
 module.exports = db;

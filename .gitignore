@@ -1,4 +1,4 @@
 node_modules
-.sqlite
+baseDatos.sqlite
 .env
 package-lock.json
